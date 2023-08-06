@@ -47,8 +47,8 @@
           let subAppType = app.split(":")[0];
           let appName = app.split(":")[1];
           let url = `/pkgs/${subAppType}/${appName}.js`;
-          await this.startPkgFromURL(url);
-          return true;
+          let thepkg = await this.startPkgFromURL(url);
+          return thepkg;
         } else {
           return false;
         }
@@ -91,15 +91,19 @@
 
               // Run the package
               await pkg.run(AppLib);
+            } else if (pkg.type === "library" && typeof pkg.lib === "object") {
+              return pkg.lib;
             } else {
               oute.error(
                 "Package may not contain sufficient details for app to run."
               );
+              return false;
             }
           } else if (pkg.ver > Kernel.version) {
             oute.warn(
               "Package is too new for Kernel Version, Please update or contact the app publisher."
             );
+            return false;
           }
         } catch (e) {
           console.group("App Error");
