@@ -1,12 +1,15 @@
 export default {
-  name: 'Test',
+  name: "Test",
   ver: 0.1, // Compatible with Kernel 0.1
-  type: 'process',
-  run: async function(Lib) {
-    console.log(Lib)
+  type: "process",
+  privs: 1,
+  run: async function (Lib) {
+    console.log("starting");
+    console.log(Lib);
   },
-  onEnd: async function(Lib) {
+  onEnd: async function (Lib) {
     // Cleanup elements you might have created
-    console.log(Lib)
-  }
-}
+    console.log("ending");
+    console.log(Lib);
+  },
+};

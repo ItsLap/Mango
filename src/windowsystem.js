@@ -2,7 +2,21 @@ let mouseX = 0;
 let mouseY = 0;
 let mouseDown = false;
 let winRef = null;
-var savedWindowedDimensions = []
+var savedWindowedDimensions = [];
+
+document.body.innerHTML += `<template id="wsTemplate">
+    <div class="ws-window">
+      <div class="ws-titlebar">
+        <div class="title"></div>
+        <div class="buttons">
+          <button class="ws-btn ws-maximize"></button>
+          <button class="ws-btn ws-minimize"></button>
+          <button class="ws-btn ws-close"></button>
+        </div>
+      </div>
+      <div class="ws-content">This is my content</div>
+    </div>
+  </template>`;
 
 class WsWindow {
   constructor(options) {
@@ -35,7 +49,7 @@ class WsWindow {
       this.options.parent = "body";
     }
     this.maximized = 0;
-    this.minimized
+    this.minimized;
     this.init();
   }
 
@@ -81,47 +95,49 @@ class WsWindow {
 
   resize(width, height) {
     this.window.style.width = width + "px";
-    this.options.width = width
+    this.options.width = width;
 
     this.window.style.height = height + "px";
-    this.options.height = height
+    this.options.height = height;
   }
 
   move(x, y) {
     this.window.style.left = x + "px";
-    this.options.left = x
+    this.options.left = x;
 
     this.window.style.top = y + "px";
-    this.options.top = y
-
+    this.options.top = y;
   }
 
   maximize() {
-    savedWindowedDimensions = [this.window.style.width, this.window.style.height, this.window.style.top, this.window.style.left]
+    savedWindowedDimensions = [
+      this.window.style.width,
+      this.window.style.height,
+      this.window.style.top,
+      this.window.style.left,
+    ];
     this.window.style.width = "100%";
-    this.options.width = "100%"
+    this.options.width = "100%";
     this.window.style.height = "100%";
-    this.options.height = "100%"
+    this.options.height = "100%";
     this.window.style.left = "0";
-    this.options.left = "0"
+    this.options.left = "0";
     this.window.style.top = "0";
-    this.options.top = "0"
+    this.options.top = "0";
   }
 
   minimize() {
     this.window.style.width = savedWindowedDimensions[0];
-    this.options.width = savedWindowedDimensions[0]
+    this.options.width = savedWindowedDimensions[0];
 
     this.window.style.height = savedWindowedDimensions[1];
-    this.options.height = savedWindowedDimensions[1]
+    this.options.height = savedWindowedDimensions[1];
 
     this.window.style.top = savedWindowedDimensions[2];
-    this.options.top = savedWindowedDimensions[2]
+    this.options.top = savedWindowedDimensions[2];
 
     this.window.style.left = savedWindowedDimensions[3];
-    this.options.left = savedWindowedDimensions[3]
-
-
+    this.options.left = savedWindowedDimensions[3];
   }
 
   close() {
@@ -144,7 +160,7 @@ document.addEventListener("mousedown", (e) => {
     }
   });
   x.style.zIndex = Number(x.style.zIndex) + 1;
-  x.classList.add("dragging")
+  x.classList.add("dragging");
   mouseDown = true;
   winRef = x;
 });
@@ -157,7 +173,7 @@ document.addEventListener("mouseup", (e) => {
     return;
   }
   x = x.parentElement.parentElement;
-  x.classList.remove("dragging")
+  x.classList.remove("dragging");
   mouseDown = false;
   winRef = null;
 });

@@ -1,17 +1,24 @@
-let services = []
+let services = [];
 
-let bootApps = []
-
-let main = (Lib) => {
-  console.log("hi")
-}
+let bootApps = [];
 
 export default {
-  name: 'Boot Manager',
+  name: "Boot Manager",
   ver: 0.1, // Compatible with Kernel 0.1
-  type: 'process',
-  run: main,
-  onEnd: async function(Lib) {
+  type: "process",
+  run: async function (Lib) {
+    console.log(Lib);
+    oute.info("Starting Mango Boot Manager");
+    let Html = Lib.lib.launchLib("Html");
+    let Kernel = Lib.kernel;
 
-  }
-}
+    let bsp = await Kernel.pkg.run("ui:BootScreen");
+    let bs = await bsp.loader();
+    await Lib.kernel.pkg.run("ui:Login");
+
+    await bs.cleanup();
+
+    window.bs = bs;
+  },
+  onEnd: async function (Lib) {},
+};
