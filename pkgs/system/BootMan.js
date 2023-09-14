@@ -18,6 +18,13 @@ export default {
 
     await bs.cleanup();
 
+    function el() {
+      document.documentElement.requestFullscreen();
+      document.body.removeEventListener("click", el);
+    }
+
+    document.body.addEventListener("click", el);
+
     window.bs = bs;
   },
   onEnd: async function (Lib) {},
