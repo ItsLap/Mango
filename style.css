@@ -21,7 +21,7 @@
   --neutral-focus: hsl(131, 27%, 20%);
   --outline: hsl(131, 23%, 22%);
   --animation-duration: 0.35s;
-  --background: url("/assets/bg.jpg");
+  --background: url("./assets/bg.jpg");
 }
 
 @font-face {
