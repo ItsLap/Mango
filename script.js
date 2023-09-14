@@ -94,7 +94,7 @@
       // ONLY USE "loadKernelExtension" for extensions and not normal apps as it provides 100% control to the system!!!
       oute.info("loading kernel extension " + url);
       let script = document.createElement("script");
-      script.src = "/src/" + url;
+      script.src = "./src/" + url;
       document.body.appendChild(script);
       oute.info("loaded " + url);
     },
@@ -110,7 +110,7 @@
         if (typeof app == "string") {
           let subAppType = app.split(":")[0];
           let appName = app.split(":")[1];
-          let url = `/pkgs/${subAppType}/${appName}.js`;
+          let url = `./pkgs/${subAppType}/${appName}.js`;
           let thepkg = await this.startPkgFromURL(url, subAppType, CheckPrivs);
           return thepkg;
         } else {
