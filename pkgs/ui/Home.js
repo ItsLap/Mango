@@ -14,18 +14,26 @@ export default {
         "background-color": "rgba(0,0,0, 0.72)",
         height: "100%",
         display: "flex",
-        "justify-content": "center",
+        // "justify-content": "center",
         "align-items": "center",
         "flex-direction": "column",
       })
       .appendTo("body");
+    let appMounter = new Html("div")
+      .class("app-mounter")
+      .style({
+        display: "flex",
+        width: "100%",
+        height: "calc(100% - calc(4vmax + 53px))",
+      })
+      .appendTo(wrapper);
     let dock = new Html("div")
       .class("dock")
       .style({
         display: "flex",
         "flex-direction": "row",
         gap: "10px",
-        "justify-content": "center",
+        "justify-content": "space-between",
         "align-items": "center",
         "max-width": "700px",
         width: "90%",
@@ -40,6 +48,28 @@ export default {
         "z-index": "999",
       })
       .appendTo(wrapper);
+
+    new Html("div")
+      .class("start-button")
+      .style({
+        width: "43px",
+        height: "43px",
+        "border-radius": "10px",
+        "background-color": "#909090",
+        "background-color": "#0009",
+        "backdrop-filter": "blur(10px)",
+        "-webkit-backdrop-filter": "blur(10px)",
+        border: "1px solid #fff2",
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "margin-left": "5px",
+      })
+      .html(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`
+      )
+      .appendTo(dock);
+
     let startButton = new Html("div")
       .class("start-button")
       .style({
@@ -74,6 +104,28 @@ export default {
         startMenu.elm.style.opacity = opacity;
       })
       .appendTo(dock);
+
+    new Html("div")
+      .class("start-button")
+      .style({
+        width: "43px",
+        height: "43px",
+        "border-radius": "10px",
+        "background-color": "#909090",
+        "background-color": "#0009",
+        "backdrop-filter": "blur(10px)",
+        "-webkit-backdrop-filter": "blur(10px)",
+        border: "1px solid #fff2",
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "margin-right": "5px",
+      })
+      .html(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>`
+      )
+      .appendTo(dock);
+
     let startMenu = new Html("div")
       .class("start-menu")
       .style({
@@ -131,6 +183,43 @@ export default {
         new Html("span").html(
           `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>`
         )
+      )
+      .appendTo(startMenu);
+
+    let appList = new Html("div")
+      .style({
+        width: "90%",
+        height: "90%",
+        display: "flex",
+        gap: "10px",
+        "justify-content": "left",
+        "align-items": "top",
+        "flex-direction": "column",
+      })
+      .html(`<p style="margin:0">Apps</p>`)
+      .appendMany(
+        new Html("div")
+          .class("apps-grid")
+          .style({
+            display: "flex",
+            "flex-direction": "row",
+            width: "100%",
+            height: "max-content",
+            "flex-wrap": "wrap",
+          })
+          .appendMany(
+            new Html("div")
+              .class("app")
+              .style({
+                width: "70px",
+                height: "70px",
+                "background-color": "#5efe5e",
+                "border-radius": "10px",
+              })
+              .on("click", (e) => {
+                Root.kernel.pkg.run("apps:TestVisualApp");
+              })
+          )
       )
       .appendTo(startMenu);
     console.log(Root);

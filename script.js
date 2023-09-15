@@ -87,7 +87,7 @@
   };
 
   const Kernel = {
-    version: 0.16,
+    version: 0.5,
     processList: [],
 
     async loadKernelExtension(url) {
@@ -105,20 +105,30 @@
     },
 
     pkg: {
-      async run(app, CheckPrivs = false) {
+      async run(app, args, CheckPrivs = false) {
         // Converts package string to url that is loadable
         if (typeof app == "string") {
           let subAppType = app.split(":")[0];
           let appName = app.split(":")[1];
           let url = `./pkgs/${subAppType}/${appName}.js`;
-          let thepkg = await this.startPkgFromURL(url, subAppType, CheckPrivs);
+          let thepkg = await this.startPkgFromURL(
+            url,
+            args,
+            subAppType,
+            CheckPrivs
+          );
           return thepkg;
         } else {
           return false;
         }
       },
 
-      async startPkgFromURL(url, appType = undefined, CheckPrivs = false) {
+      async startPkgFromURL(
+        url,
+        args,
+        appType = undefined,
+        CheckPrivs = false
+      ) {
         let pkg;
         try {
           // Import Package
@@ -167,6 +177,7 @@
                   processList: Kernel.processList,
                   lib: appLib,
                   kernel: Kernel,
+                  args,
                   // other privleged functions / variables
                 };
 
@@ -198,6 +209,7 @@
                   proc: Kernel.processList[appPid],
                   pid: appPid,
                   lib: appLib,
+                  args,
                 };
 
                 // Run the package
@@ -236,6 +248,6 @@
   };
   window.Kernel = Kernel;
   await Kernel.init().then(async () => {
-    await Kernel.pkg.run("system:BootMan");
+    await Kernel.pkg.run("system:BootMan", [], "privs");
   });
 })();

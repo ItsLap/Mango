@@ -23,7 +23,7 @@ export default {
       document.body.removeEventListener("click", el);
     }
 
-    document.body.addEventListener("click", el);
+    // document.body.addEventListener("click", el);
 
     window.bs = bs;
   },
